@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <h1>{{ repair_request.title }}</h1>
+    <p>{{ repair_request.description }}</p>
+    <form id="delete-form" action="{% url 'requests:delete_repair_request' repair_request.id %}" method="post" style="display:none;">
+        {% csrf_token %}
+    </form>
+    <p><a href="#" onclick="if(confirm('Вы уверены, что хотите удалить этот запрос на ремонт?')) { document.getElementById('delete-form').submit(); } return false;">Удалить запрос на ремонт</a></p>
+    <p><a href="{% url 'requests:update_repair_request' repair_request.id %}">Изменить запрос на ремонт</a></p>
+    <ul>
+        <li>Имя студента: {{ repair_request.student_name }}</li>
+        <li>Номер комнаты: {{ repair_request.room_number }}</li>
+        <li>Статус: {{ repair_request.status }}</li>
+        <li>Приоритет: {{ repair_request.priority }}</li>
+    </ul>
+{% endblock %}

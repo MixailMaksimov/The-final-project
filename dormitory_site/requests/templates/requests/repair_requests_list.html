@@ -1,0 +1,11 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <h1>Заявки на ремонт</h1>
+    <p><a href="{% url 'requests:create_repair_request' %}">Подать заявку на ремонт</a></p>
+    <ul>
+        {% for repair_request in repair_requests_list %}
+            <li><a href="{% url 'requests:repair_request_detail' repair_request.id %}">{{ repair_request.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

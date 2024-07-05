@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <h1>Бронирование места в коворкинге</h1>
+    <h2>Забронировать место в коворкинге</h2>
+    <p><a href="{% url 'requests:select_free_desk' 'With_Computer'%}">с компьютером</a></p>
+    <p><a href="{% url 'requests:select_free_desk' 'Without_Computer'%}">без компьютера</a></p>
+    <p><a href="{% url 'requests:select_free_desk' 'Any'%}">любое</a></p>
+    <h2>Ваши броинрования</h2>
+    <ul>
+        {% for booking_coworking in booking_coworking_list %}
+            {% if booking_coworking.is_booked == True %}
+            <li><a href="{% url 'requests:booking_coworking_detail' booking_coworking.desk_number %}">Бронирование стола №{{ booking_coworking.desk_number }} на {{ booking_coworking.booking_date }} {{ booking_coworking.booking_start_time }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

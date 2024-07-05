@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<h1>Изменение заявки на ремонт</h1>
+<h1>Изменение бронирования места в коворкинге</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

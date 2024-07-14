@@ -1,4 +1,4 @@
-from __future__ import absolute_import, unicode_literals
+'''from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
 from celery.schedules import crontab
@@ -14,4 +14,4 @@ app.conf.beat_schedule = {
         'task': 'requests.tasks.clear_expired_bookings',
         'schedule': crontab(),  # каждую минуту
     },
-}
+}'''

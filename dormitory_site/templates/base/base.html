@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Общежитие{% endblock %}</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+    <header>
+        <!-- Общий заголовок для всех страниц -->
+      <h1>Dormitory</h1>
+    </header>
+    {% include 'base/nav.html' %}
+    <main>
+        {% block content %}
+        <!-- Основное содержимое страницы -->
+        {% endblock %}
+    </main>
 
-<div class="content">
-    {% block content %}
-    {% endblock %}
-</div>
-
+    <footer>
+        <!-- Общий футер для всех страниц -->
+    </footer>
 </body>
 </html>

@@ -1,0 +1,12 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<h2>Личный кабинет</h2>
+  <p><strong>ФИО:</strong> {{ student.last_name }} {{ student.first_name }} {{ student.middle_name }}</p>
+  <p><strong>Номер комнаты:</strong> {{ student.room.room_number }}</p>
+  <p><strong>Направление обучения:</strong> {{ student.major }}</p>
+  <p><strong>Курс:</strong> {{ student.course }}</p>
+  <p><strong>QR код для входа:</strong></p>
+<img src="{{ qr_code }}" alt="QR code">
+<a href="{% url 'logout' %}">Выйти</a>
+{% endblock %}

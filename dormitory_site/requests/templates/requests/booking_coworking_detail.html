@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <h1>Запись в коворкинг</h1>
+    <form id="delete-form" action="{% url 'requests:clear_booking' booking_coworking.desk_number %}" method="post" style="display:none;">
+        {% csrf_token %}
+    </form>
+    <p><a href="#" onclick="if(confirm('Вы уверены, что хотите удалить это бронирование места?')) { document.getElementById('delete-form').submit(); } return false;">Удалить бронирование места</a></p>
+    <p><a href="{% url 'requests:update_booking_coworking' booking_coworking.desk_number %}">Изменить бронирование места</a></p>
+    <ul>
+        <li>Имя студента: {{ booking_coworking.student_name }}</li>
+        <li>Тип стола: {{ booking_coworking.space_name }}</li>
+        <li>Номер стола: {{ booking_coworking.workspace_to_book }}</li>
+    </ul>
+{% endblock %}

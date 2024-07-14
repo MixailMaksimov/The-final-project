@@ -11,7 +11,7 @@ class Room(models.Model):
         return f'Комната №{self.room_number}'
 
     def get_students(self):
-        return self.students.all()
+        return ", ".join([f"{student.id} {student.first_name} {student.last_name}" for student in self.students.all()])
 
 
 class Student(models.Model):
@@ -22,6 +22,13 @@ class Student(models.Model):
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True, related_name='students', verbose_name='Комната')
     course = models.IntegerField(verbose_name='Курс обучения')
     major = models.CharField(max_length=200, verbose_name='Направление обучения')
+    login = models.CharField(max_length=100, verbose_name='Логин')
+    password = models.CharField(max_length=100, verbose_name='Пароль')
+
+    def save(self, *args, **kwargs):
+        if not self.login:
+            self.login = f'User{self.id}'
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.id} {self.last_name} {self.first_name} {self.middle_name}'

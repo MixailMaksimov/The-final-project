@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.conf import settings
+from personal_account.models import Room, Student
 
 # Create your models here.
 class RepairRequest(models.Model):
@@ -19,10 +21,10 @@ class RepairRequest(models.Model):
     def __str__(self):
         return self.title
 
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь')
     title = models.CharField(max_length=100)
     description = models.TextField()
-    student_name = models.CharField(max_length=100)
-    room_number = models.IntegerField()
+    room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True, verbose_name='Комната')
     status = models.CharField(
         max_length=50,
         choices=STATUS_CHOICES,
@@ -47,7 +49,7 @@ class BookingCoworking(models.Model):
     desk_number = models.IntegerField(primary_key=True)
     desk_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     is_booked = models.BooleanField(default=False)
-    student_name = models.CharField(null=True, blank=True, max_length=100)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь', null=True, blank=True)
     booking_date = models.DateField(null=True, blank=True, verbose_name="Дата бронирования")
     booking_start_time = models.TimeField(null=True, blank=True, verbose_name="Время начала бронирования")
     booking_end_time = models.TimeField(null=True, blank=True, verbose_name="Время окончания бронирования")

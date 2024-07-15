@@ -1,4 +1,4 @@
-from celery import shared_task
+'''from celery import shared_task
 from django.utils import timezone
 from .models import BookingCoworking
 
@@ -11,5 +11,5 @@ def clear_expired_bookings():
         student_name__isnull=False
     )
     expired_bookings.update(student_name=None)
-
+'''
 

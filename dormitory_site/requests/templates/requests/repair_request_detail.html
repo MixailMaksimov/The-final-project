@@ -9,8 +9,8 @@
     <p><a href="#" onclick="if(confirm('Вы уверены, что хотите удалить эту заявку на ремонт?')) { document.getElementById('delete-form').submit(); } return false;">Удалить заявку на ремонт</a></p>
     <p><a href="{% url 'requests:update_repair_request' repair_request.id %}">Изменить заявку на ремонт</a></p>
     <ul>
-        <li>Имя студента: {{ repair_request.student_name }}</li>
-        <li>Номер комнаты: {{ repair_request.room_number }}</li>
+        <li>Студент: {{ repair_request.user.first_name }} {{ repair_request.user.last_name }}</li>
+        <li>Номер комнаты: {{ repair_request.room }}</li>
         <li>Статус: {{ repair_request.get_status_display }}</li>
         <li>Приоритет: {{ repair_request.get_priority_display }}</li>
     </ul>

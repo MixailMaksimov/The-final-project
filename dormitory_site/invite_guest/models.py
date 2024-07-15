@@ -1,12 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
+from personal_account.models import Student, Room
 from .validators import validate_name, validate_passport_number
 
 
 class GuestRequest(models.Model):
     id = models.IntegerField(primary_key=True, verbose_name='ID')
-    user_id = models.ForeignKey(null=True, on_delete=models.SET_NULL, to='personal_account.student', verbose_name='Студент')    
+    user = models.ForeignKey(Student, null=True, on_delete=models.SET_NULL, related_name='guest_requests_as_user', verbose_name='Студент')
+    room = models.ForeignKey(Room, null=True, on_delete=models.SET_NULL, related_name='guest_requests_as_room', verbose_name='Комната')      
     guest_name = models.CharField(max_length=100, validators = [validate_name])
     guest_passport = models.IntegerField(validators = [validate_passport_number])
     guest_arrival = models.DateTimeField()

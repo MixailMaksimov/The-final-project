@@ -7,18 +7,25 @@ from django.template.loader import render_to_string
 from .forms import RepairRequestForm, BookingCoworkingForm
 from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import UpdateView
+from django.contrib.auth.decorators import login_required
+
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'requests/index.html')
 
+
+@login_required
 def repair_requests_list(request):
     repair_requests = RepairRequest.objects.all()
     return render(request, 'requests/repair_requests_list.html', {'repair_requests_list': repair_requests})
 
+
+@login_required
 def booking_coworking_list(request):
     booking_coworking = BookingCoworking.objects.all()
     return render(request, 'requests/booking_coworking_list.html', {'booking_coworking_list': booking_coworking})
+
 
 class RepairRequestDetailView(DetailView):
     model = RepairRequest
@@ -64,6 +71,8 @@ class BookingCoworkingUpdateView(UpdateView):
     template_name = 'requests/booking_coworking_update.html'
     success_url = reverse_lazy('requests:booking_coworking_list')
 
+
+@login_required
 def select_free_desk(request, preference):
     if request.method == 'POST':
         form = BookingCoworkingForm(request.POST)
@@ -88,6 +97,8 @@ def select_free_desk(request, preference):
         form = BookingCoworkingForm()
     return render(request, 'requests/select_free_desk.html', {'form': form})   
 
+
+@login_required
 def clear_booking(request, desk_number):
     booking_coworking = get_object_or_404(BookingCoworking, desk_number=desk_number)
     booking_coworking.booking_date = None

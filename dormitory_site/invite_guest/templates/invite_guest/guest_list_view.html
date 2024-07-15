@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Заявки на ремонт</h1>
-    <p><a href="{% url 'guests:guest_request_view' %}">Подать заявку на гостя</a></p>
+    <p><a href="{% url 'invite_guest:guest_request_view' %}">Подать заявку на гостя</a></p>
     <!-- <ul>
         {% for guest_request in guest_list_view %}
             <li><a href="{% url 'guests:repair_request_detail' repair_request.id %}">{{ repair_request.title }}</a></li>

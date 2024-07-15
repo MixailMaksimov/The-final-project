@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = 'guests'
+app_name = 'invite_guest'
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),

@@ -41,11 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main_page',
     'personal_account',
-    'invite_guest',
     'notifications',
     'payment',
     'troubleshooting',
     'requests.apps.RepairRequestsConfig',
+    'invite_guest',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +57,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'profile'
 
 ROOT_URLCONF = 'dormitory_site.urls'
 

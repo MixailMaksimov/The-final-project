@@ -9,11 +9,13 @@ def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
+            logout(request)  # Разлогинить текущего пользователя
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                form = LoginForm()  # Очистить форму
                 return redirect('profile')  # Перенаправление на личный кабинет после успешного входа
     else:
         form = LoginForm()
@@ -22,13 +24,15 @@ def user_login(request):
 
 @login_required
 def profile(request):
-    student = Student.objects.get(user=request.user)
+    if request.user.is_authenticated:
+        student = Student.objects.get(user=request.user)
 
-    context = {
-        'student': student,
-        'room': student.room,  # Добавление информации о комнате
-    }
-    return render(request, 'personal_account/profile.html', context)
+        context = {
+            'student': student,
+        }
+        return render(request, 'personal_account/profile.html', context)
+    else:
+        return redirect('login')  # Перенаправить на страницу входа, если пользователь не аутентифицирован
 
 
 def user_logout(request):

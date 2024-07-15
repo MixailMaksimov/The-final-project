@@ -5,6 +5,7 @@ from .models import RepairRequest, BookingCoworking
 def not_booked(modeladmin, request, queryset):
     queryset.update(is_booked=False)
 
+
 # Класс администратора для модели RepairRequest
 @admin.register(RepairRequest)
 class RepairRequestAdmin(admin.ModelAdmin):
@@ -19,6 +20,7 @@ class RepairRequestAdmin(admin.ModelAdmin):
             'fields': ('status','priority')
         }),
     )
+
 
 @admin.register(BookingCoworking)
 class BookingCoworkingAdmin(admin.ModelAdmin):

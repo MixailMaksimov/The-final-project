@@ -1,6 +1,7 @@
 from django import forms
 from .models import GuestRequest
 
+
 class GuestRequestForm(forms.ModelForm):
     class Meta:
         model = GuestRequest

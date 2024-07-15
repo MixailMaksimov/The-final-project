@@ -1,17 +1,867 @@
-{% extends 'base/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="english">
+  <head>
+    <title>Requests - exported project</title>
+    <meta property="og:title" content="Requests - exported project" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
 
-{% block content %}
-    <h1>Бронирование места в коворкинге</h1>
-    <h2>Забронировать место в коворкинге</h2>
-    <p><a href="{% url 'requests:select_free_desk' 'With_Computer'%}">с компьютером</a></p>
-    <p><a href="{% url 'requests:select_free_desk' 'Without_Computer'%}">без компьютера</a></p>
-    <p><a href="{% url 'requests:select_free_desk' 'Any'%}">любое</a></p>
-    <h2>Ваши броинрования</h2>
-    <ul>
-        {% for booking_coworking in booking_coworking_list %}
-            {% if booking_coworking.is_booked == True %}
-            <li><a href="{% url 'requests:booking_coworking_detail' booking_coworking.desk_number %}">Бронирование стола №{{ booking_coworking.desk_number }} на {{ booking_coworking.booking_date }} {{ booking_coworking.booking_start_time }}</a></li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-{% endblock %}
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Inter;
+        font-size: 16px;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-theme-neutral-dark);
+        background-color: var(--dl-color-theme-neutral-light);
+
+        fill: var(--dl-color-theme-neutral-dark);
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/animate.css@4.1.1/animate.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+    />
+    <style>
+      .requests-container {
+        width: 100%;
+        display: flex;
+        min-height: 100vh;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .requests-frame {
+        width: 100%;
+        height: 1024px;
+        display: flex;
+        overflow: hidden;
+        position: relative;
+        background: linear-gradient(
+          180deg,
+          rgba(139, 227, 255, 0.8) 0%,
+          rgba(135, 219, 184, 0.8) 69%,
+          rgba(130, 210, 110, 0.8) 100%
+        );
+        align-items: flex-start;
+        flex-shrink: 0;
+      }
+
+      .requests-container1 {
+        top: 193px;
+        left: 0px;
+        right: 0px;
+        width: 1268px;
+        height: 779px;
+        margin: auto;
+        display: flex;
+        position: absolute;
+        align-items: flex-start;
+      }
+      .requests-background-rectangle-1 {
+        top: 0px;
+        left: 0px;
+        width: 1268px;
+        height: 627px;
+        opacity: 0.40;
+        position: absolute;
+        border-radius: 20px;
+      }
+      .requests-background-rectangle-2 {
+        top: 0px;
+        right: 0px;
+        width: 452px;
+        height: 627px;
+        opacity: 0.40;
+        position: absolute;
+        border-radius: 20px;
+      }
+      .requests-requests-bar {
+        top: 0px;
+        left: 0px;
+        width: 1268px;
+        height: 80px;
+        display: flex;
+        position: absolute;
+        align-items: flex-start;
+        flex-shrink: 0;
+      }
+
+      
+      .requests-rectangle1 {
+        top: 0px;
+        left: 0px;
+        width: 1268px;
+        height: 80px;
+        opacity: 0.80;
+        position: absolute;
+        border-radius: 20px;
+      }
+      .requests-text {
+        top: 24.799999237060547px;
+        left: 285.5419921875px;
+        color: rgba(112, 162, 148, 1);
+        height: auto;
+        position: absolute;
+        font-size: 32px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .new-request-rectangle1 {
+          top: 0px;
+          left: 0px;
+          width: 400px;
+          height: 80px;
+          opacity: 0.80;
+          position: absolute;
+          border-radius: 20px;
+      }
+      .requests-status-bar {
+        top: 0px;
+        right: 0px;
+        width: 452px;
+        height: 80px;
+        display: flex;
+        position: absolute;
+        align-items: flex-start;
+        flex-shrink: 0;
+      }
+
+      .new-request-text13 {
+        top: 50px;
+        left: 50px;
+        color: rgba(255, 255, 255, 1);
+        height: auto;
+        position: absolute;
+        font-size: 32px;
+        font-style: Bold;
+        text-align: left;
+        font-family: Ubuntu;
+        font-weight: 700;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+        }
+      .requests-rectangle11 {
+        top: 0px;
+        left: 0px;
+        width: 452px;
+        height: 80px;
+        opacity: 0.80;
+        position: absolute;
+        border-radius: 20px;
+      }
+      .requests-text01 {
+        top: 24.799999237060547px;
+        left: 176.7862548828125px;
+        color: rgba(112, 162, 148, 1);
+        height: auto;
+        position: absolute;
+        font-size: 32px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-new-request {
+        left: 434px;
+        width: 400px;
+        bottom: 0px;
+        height: 80px;
+        display: flex;
+        position: absolute;
+        align-items: flex-start;
+        flex-shrink: 0;
+      }
+      .requests-rectangle12 {
+        top: 0px;
+        left: 100px;
+        width: 400px;
+        height: 80px;
+        opacity: 0.80;
+        position: absolute;
+        border-radius: 20px;
+      }
+      .requests-text03 {
+        top: 20px;
+        left: 183.07633209228516px;
+        color: rgba(112, 162, 148, 1);
+        height: auto;
+        position: absolute;
+        font-size: 32px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-list-of-requests {
+        top: 169px;
+        left: 59px;
+        width: 1029.223388671875px;
+        height: 235px;
+        display: flex;
+        position: absolute;
+        align-items: flex-start;
+        flex-shrink: 1;
+      }
+      .requests-frame9 {
+        gap: 25px;
+        top: 0px;
+        left: 0px;
+        display: flex;
+        position: absolute;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .requests-frame1 {
+        gap: 10px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        padding: 10px;
+        box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.4000000059604645) ;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 20px;
+        flex-direction: column;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 1);
+      }
+      .requests-text07 {
+        color: rgba(194, 53, 53, 1);
+        height: auto;
+        font-size: 64px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-frame2 {
+        gap: 10px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        padding: 10px;
+        box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.4000000059604645) ;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 20px;
+        flex-direction: column;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 1);
+      }
+      .requests-text08 {
+        color: rgba(194, 53, 53, 1);
+        height: auto;
+        font-size: 64px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-frame3 {
+        gap: 10px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        padding: 10px;
+        box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.4000000059604645) ;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 20px;
+        flex-direction: column;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 1);
+      }
+      .requests-text09 {
+        color: rgba(194, 53, 53, 1);
+        height: auto;
+        font-size: 64px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-frame21 {
+        gap: 10px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        padding: 10px;
+        box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.4000000059604645) ;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 20px;
+        flex-direction: column;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 1);
+      }
+      .requests-text10 {
+        color: rgba(194, 53, 53, 1);
+        height: auto;
+        font-size: 50px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text11 {
+        top: 6px;
+        left: 79px;
+        color: rgba(67, 98, 93, 1);
+        width: 947px;
+        height: auto;
+        position: absolute;
+        font-size: 24px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text12 {
+        left: 79px;
+        color: rgba(67, 98, 93, 1);
+        width: 807px;
+        height: auto;
+        position: absolute;
+        font-size: 24px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text13 {
+        top: 136px;
+        left: 79px;
+        color: rgba(67, 98, 93, 1);
+        width: 950px;
+        height: auto;
+        position: absolute;
+        font-size: 24px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text14 {
+        left: 880px;
+        color: rgba(67, 98, 93, 1);
+        width: 807px;
+        height: auto;
+        position: absolute;
+        font-size: 24px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-list-of-statuses {
+        gap: 10;
+        top: 173px;
+        right: 22.5340576171875px;
+        width: 367px;
+        height: 228.63636779785156px;
+        display: flex;
+        position: absolute;
+        align-items: flex-start;
+        flex-shrink: 1;
+      }
+      .requests-frame10 {
+        gap: var(--dl-space-space-unit);
+        display: flex;
+        align-self: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: flex-start;
+        left: 0px;
+        color: rgba(255, 255, 255, 1);
+        right: 0px;
+        height: auto;
+        margin: auto;
+        position: absolute;
+        font-size: 64px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text15 {
+        color: rgba(41, 191, 74, 1);
+        width: 365px;
+        height: auto;
+        font-size: 24px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+        background-color: transparent;
+      }
+      .requests-text17 {
+        color: rgba(41, 191, 74, 1);
+        width: 367px;
+        height: auto;
+        font-size: 24px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+        background-color: transparent;
+      }
+      .requests-text19 {
+        color: rgba(41, 191, 74, 1);
+        width: 367px;
+        height: auto;
+        font-size: 24px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+        background-color: transparent;
+      }
+
+      
+      .requests-text20 {
+        color: rgba(218, 78, 78, 1);
+        width: 367px;
+        height: auto;
+        font-size: 24px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+        background-color: transparent;
+      }
+      .requests-logo {
+        top: 33px;
+        left: 0px;
+        right: 0px;
+        width: 364px;
+        height: 94px;
+        margin: auto;
+        display: flex;
+        position: absolute;
+        align-items: flex-start;
+        flex-shrink: 0;
+        background-color: transparent;
+      }
+      .requests-text21 {
+        left: 0px;
+        color: rgba(255, 255, 255, 1);
+        right: 0px;
+        height: auto;
+        margin: auto;
+        position: absolute;
+        font-size: 64px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text22 {
+        top: 75px;
+        left: 0px;
+        color: rgba(255, 255, 255, 1);
+        right: 0px;
+        height: auto;
+        margin: auto;
+        position: absolute;
+        font-size: 16px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-exit {
+        top: 57px;
+        right: 50px;
+        width: 170px;
+        height: 46px;
+        display: flex;
+        position: absolute;
+        align-items: flex-start;
+        background-color: transparent;
+      }
+      .requests-frame7 {
+        gap: 10px;
+        top: 0px;
+        left: 0px;
+        width: 170px;
+        height: 40px;
+        display: flex;
+        opacity: 0.40;
+        padding: 10px;
+        position: absolute;
+        box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.4000000059604645) ;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 20px;
+        flex-direction: column;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 1);
+      }
+      .requests-frame6 {
+        gap: 10px;
+        top: 0px;
+        right: 0px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        padding: 10px;
+        position: absolute;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) ;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 20px;
+        flex-direction: column;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 1);
+      }
+      .requests-text23 {
+        color: rgba(194, 53, 53, 1);
+        height: auto;
+        font-size: 48px;
+        font-style: Regular;
+        text-align: left;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-frame1 {
+        top: 0px;
+        left: 16px;
+        width: 108px;
+        height: 46px;
+        display: flex;
+        position: absolute;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15000000596046448) ;
+        align-items: flex-start;
+        flex-shrink: 0;
+      }
+      .requests-text24 {
+        color: rgba(194, 53, 53, 1);
+        height: auto;
+        position: absolute;
+        font-size: 32px;
+        font-style: Bold;
+        text-align: left;
+        font-family: Ubuntu;
+        font-weight: 700;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-name {
+        top: 57px;
+        left: 50px;
+        width: 224px;
+        height: 46px;
+        display: flex;
+        position: absolute;
+        align-items: flex-start;
+        flex-shrink: 0;
+        background-color: transparent;
+      }
+      .requests-text26 {
+        left: 0px;
+        color: rgba(255, 255, 255, 1);
+        height: auto;
+        position: absolute;
+        font-size: 32px;
+        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5) ;
+        font-style: Bold;
+        text-align: left;
+        font-family: Ubuntu;
+        font-weight: 700;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text28 {
+        top: 36.70212936401367px;
+        left: 2.318681240081787px;
+        color: rgba(255, 255, 255, 1);
+        height: auto;
+        position: absolute;
+        font-size: 24px;
+        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5) ;
+        font-style: Bold;
+        text-align: left;
+        font-family: Ubuntu;
+        font-weight: 700;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      @media(max-width: 1600px) {
+        .requests-text {
+          color: rgb(112, 162, 148);
+          font-size: 32px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
+        .requests-new-request {
+          background-color: transparent;
+        }
+        .requests-text03 {
+          left: 200px;
+          color: rgb(112, 162, 148);
+          right: 0px;
+          margin: auto;
+          font-size: 32px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
+        .requests-list-of-requests {
+          width: 642px;
+        }
+        .requests-text11 {
+          color: rgb(67, 98, 93);
+          font-size: 24px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
+        .requests-text12 {
+          color: rgb(67, 98, 93);
+          font-size: 24px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
+        .requests-text13 {
+          color: rgb(67, 98, 93);
+          font-size: 24px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
+        .requests-text14 {
+          color: rgb(67, 98, 93);
+          font-size: 24px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
+        .new-request-text13 {
+            left: 50px;
+        }
+        .requests-list-of-statuses {
+          width: 397px;
+        }
+        .requests-text19 {
+          color: rgb(41, 191, 74);
+          font-size: 24px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+          background-color: transparent;
+        }
+        .requests-text20 {
+          color: rgb(218, 78, 78);
+          font-size: 24px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+          background-color: transparent;
+        }
+        .requests-text21 {
+          left: 0px;
+          color: rgb(255, 255, 255);
+          right: 0px;
+          margin: auto;
+          font-size: 64px;
+          font-family: Ubuntu;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
+        .requests-text22 {
+          left: 0px;
+          color: rgb(255, 255, 255);
+          right: 0px;
+          margin: auto;
+          font-size: 16px;
+          text-align: center;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
+        .requests-text26 {
+          left: 0px;
+        }
+      }
+
+    </style>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div>
+      <link href="./requests.css" rel="stylesheet" />
+
+      <div class="requests-container">
+        <div class="requests-frame">
+          <div class="requests-container1">
+            <img
+              alt="Rectangle45378"
+              src="{% static 'requests/images/rectangle45378-26cp-700h.png' %}"
+              class="requests-background-rectangle-1"
+            />
+            <img
+              alt="Rectangle55379"
+              src="{% static 'requests/images/rectangle55379-f9th-700h.png' %}"
+              class="requests-background-rectangle-2"
+            />
+            <div class="requests-requests-bar">
+              <img
+                alt="Rectangle15381"
+                src="{% static 'requests/images/rectangle15381-26zh-200h.png' %}"
+                class="requests-rectangle1"
+              />
+              <span class="requests-text">Бронирование</span>
+            </div>
+            <div class="requests-status-bar">
+              <img
+                alt="Rectangle15384"
+                src="{% static 'requests/images/rectangle15384-gh8e-200h.png' %}"
+                class="requests-rectangle11"
+              />
+              <span class="requests-text01"><span>Стол</span></span>
+            </div>
+            
+            <div class="requests-list-of-requests list">
+                <ul style="list-style-type: none; ">
+                  {% for booking_coworking in booking_coworking_list %}
+                    {% if booking_coworking.is_booked == True %}
+                    <div class="requests-frame21">
+                      <span class="requests-text10">*</span>
+                      <li class="requests-text12"><a href="{% url 'requests:booking_coworking_detail' booking_coworking.desk_number %}">{{ booking_coworking.booking_date }} {{ booking_coworking.booking_start_time }}-{{ booking_coworking.booking_end_time }}</a></li>
+                      <li class="requests-text14">№ {{ booking_coworking.desk_number }} - {{ booking_coworking.get_desk_type_display }}</li>
+                    </div>
+                    <br/>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+            <span class="requests-text03">Забронировать место в коворкинге</span>
+            <div class="requests-new-request button">
+              <img
+                alt="Rectangle1I538"                
+                src="{% static 'requests/images/rectangle1i538-7fb-200h.png' %}"
+                class="requests-rectangle12"
+              />
+              <div class="requests-container">
+                <div class="new-request-send-request button">
+                    <a href="{% url 'requests:select_free_desk' 'With_Computer' %}" class="custom-button">с компьютером</a>
+                </div>
+            </div>
+          </div>
+          <div class="requests-logo button">
+            <span class="requests-text21">DORMiTORY</span>
+            <span class="requests-text22">
+              Сайт общежитий МГТУ им. Н. Э. Баумана
+            </span>
+          </div>
+          <div class="requests-exit button">
+            <div class="requests-frame7"></div>
+            <div class="requests-frame6">
+              <span class="requests-text23">&gt;</span>
+            </div>
+            <div class="requests-frame1">
+              <span class="requests-text24"><span>Выход</span></span>
+            </div>
+          </div>
+          <div class="new-request-name button">
+            <span class="new-request-text13">{{ user.first_name }} {{ user.last_name }}</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

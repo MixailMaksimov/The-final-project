@@ -4,12 +4,7 @@ from .models import RepairRequest, BookingCoworking
 class RepairRequestForm(ModelForm):
     class Meta:
         model = RepairRequest
-        fields = ['title', 'description', 'priority']
-        labels = {
-            'title': 'Название',
-            'description': 'Описание',
-            'priority': 'Приоритет'
-        }
+        fields = ['title', 'description']
 
 
 

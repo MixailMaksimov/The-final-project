@@ -20,7 +20,12 @@ class IndexView(View):
 @login_required
 def repair_requests_list(request):
     repair_requests = RepairRequest.objects.all()
-    return render(request, 'requests/repair_requests_list.html', {'repair_requests_list': repair_requests})
+    user = request.user 
+    return render(request, 'requests/repair_requests_list.html', {
+        'repair_requests_list': repair_requests,
+        'user': user 
+    })
+
 
 
 @login_required

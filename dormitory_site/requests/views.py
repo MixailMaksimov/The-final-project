@@ -6,8 +6,10 @@ from .models import RepairRequest, BookingCoworking
 from django.template.loader import render_to_string
 from .forms import RepairRequestForm, BookingCoworkingForm
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.decorators import login_required
+from personal_account.models import Student
 
 
 class IndexView(View):
@@ -18,7 +20,12 @@ class IndexView(View):
 @login_required
 def repair_requests_list(request):
     repair_requests = RepairRequest.objects.all()
-    return render(request, 'requests/repair_requests_list.html', {'repair_requests_list': repair_requests})
+    user = request.user 
+    return render(request, 'requests/repair_requests_list.html', {
+        'repair_requests_list': repair_requests,
+        'user': user 
+    })
+
 
 
 @login_required
@@ -45,11 +52,23 @@ class BookingCoworkingDetailView(DetailView):
         context['booking_coworking'] = self.get_object()
         return context
 
-class RepairRequestCreateView(CreateView):
+class RepairRequestCreateView(LoginRequiredMixin, CreateView):
     model = RepairRequest
     form_class = RepairRequestForm
     template_name = 'requests/repair_request_form.html'
     success_url = reverse_lazy('requests:repair_requests_list')
+    def form_valid(self, form):
+        user = self.request.user
+        try:
+            student = Student.objects.get(user=user)
+        except Student.DoesNotExist:
+            form.add_error(None, "Студент не найден.")
+            return self.form_invalid(form)
+        
+        form.instance.user = user
+        form.instance.room = student.room
+        return super().form_valid(form)
+
 
 class BookingCoworkingCreateView(CreateView):
     model = BookingCoworking
@@ -72,6 +91,7 @@ class BookingCoworkingUpdateView(UpdateView):
     success_url = reverse_lazy('requests:booking_coworking_list')
 
 
+
 @login_required
 def select_free_desk(request, preference):
     if request.method == 'POST':
@@ -80,6 +100,7 @@ def select_free_desk(request, preference):
             booking_date = form.cleaned_data['booking_date']
             booking_start_time = form.cleaned_data['booking_start_time']
             booking_end_time = form.cleaned_data['booking_end_time']
+
             if preference == 'Any':
                 desk = BookingCoworking.objects.filter(is_booked=False).first()
             else:
@@ -88,6 +109,8 @@ def select_free_desk(request, preference):
                 desk.booking_date = booking_date
                 desk.booking_start_time = booking_start_time
                 desk.booking_end_time = booking_end_time
+                user = request.user
+                desk.user = user
                 desk.is_booked = True
                 desk.save()
                 return redirect(reverse('requests:booking_coworking_list'))
@@ -105,7 +128,7 @@ def clear_booking(request, desk_number):
     booking_coworking.booking_start_time = None
     booking_coworking.booking_end_time = None
     booking_coworking.is_booked = False
-    booking_coworking.student_name = None
+    booking_coworking.user = None
     booking_coworking.save()
     booking_coworking = BookingCoworking.objects.all()
     return render(request, 'requests/booking_coworking_list.html', {'booking_coworking_list': booking_coworking})

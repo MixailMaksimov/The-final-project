@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <title>DORMiTORY</title>
+</head>
+<body>
+    <div class="home-screen-container">
+        <div class="home-screen-frame">
+            <img
+                alt="IMAGE11414"
+                src="{% static 'img/image11414-9kws-200h.png' %}"
+                class="home-screen-background"
+            />
+            <div class="home-screen-container1">
+                <div class="home-screen-logo">
+                    <span class="home-screen-dormitory"><span>DORMiTORY</span></span>
+                    <span class="home-screen-subtitle">
+                        <span>Сайт общежитий МГТУ им. Н. Э. Баумана</span>
+                    </span>
+                </div>
+                <div class="home-screen-cabinet-button button">
+                    <a href="{% url 'login' %}" class="button-link">
+                        <img
+                            alt="Rectangle159"
+                            src="{% static 'img/rectangle159-1geq-200h.png' %}"
+                            class="home-screen-rectangle1"
+                        />
+                        <span class="home-screen-text2"><span>Личный кабинет</span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

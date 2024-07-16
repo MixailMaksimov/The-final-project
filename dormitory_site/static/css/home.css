@@ -1,0 +1,105 @@
+.home-screen-container {
+  width: 100%;
+  height: 100vh; /* Высота равная высоте экрана */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-screen-frame {
+  width: 100%;
+  height: 100vh; /* Высота равная высоте экрана */
+  position: relative;
+  overflow: hidden;
+}
+
+.home-screen-background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Масштабирует изображение так, чтобы оно полностью заполняло контейнер */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.home-screen-container1 {
+  width: 100%;
+  max-width: 1200px; /* Чтобы контент не растягивался на больших экранах */
+  height: auto;
+  position: relative;
+  top: 100px; /* Используем относительные значения для адаптивности */
+  right: 5%;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+
+.home-screen-logo {
+  width: 100%;
+  max-width: 717px;
+  height: 170px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.home-screen-dormitory,
+.home-screen-subtitle {
+  color: #fff;
+  font-family: ABeeZee;
+  font-weight: 400;
+  line-height: normal;
+  text-align: left;
+  font-size: 2em; /* Используем em для лучшей масштабируемости */
+  margin-bottom: 10px;
+}
+
+.home-screen-subtitle {
+  font-size: 1em;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.home-screen-cabinet-button {
+  width: 524px;
+  height: 100px;
+  position: absolute;
+  bottom: 20px; /* Используем относительные значения для адаптивности */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+
+.home-screen-rectangle1 {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  border-radius: 20px;
+}
+
+.home-screen-text2 {
+  color: #5a7f78;
+  font-family: ABeeZee;
+  font-weight: 400;
+  line-height: normal;
+  font-size: 1em;
+  text-align: center;
+  position: relative;
+}
+
+@media (max-width: 1600px) {
+  .home-screen-dormitory {
+    text-align: center;
+    margin: auto;
+  }
+
+  .home-screen-subtitle {
+    text-align: center;
+    margin: auto;
+  }
+}

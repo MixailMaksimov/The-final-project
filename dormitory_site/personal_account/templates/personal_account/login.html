@@ -1,10 +1,41 @@
-{% extends 'base/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dormitory Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-frame">
+            <div class="login-logo button">
+                <span class="login-dormitory">DORMiTORY</span>
+                <span class="login-subtitle">Сайт общежитий МГТУ им. Н. Э. Баумана</span>
+            </div>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="login-input-container">
+                    <label for="id_username" class="login-login">Логин</label>
+                <input id="id_username" type="text" class="login-login-input input" name="username" />
 
-{% block content %}
-<h2>Вход в личный кабинет</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
-{% endblock %}
+                <label for="id_password" class="login-password">Пароль</label>
+                <input id="id_password" type="password" class="login-password-input input" name="password" />
+                </div>
+                <div class="login-login-button button">
+                    <button class="login-text" type="submit">Вход</button>
+                </div>
+            </form>
+            <div class="login-text3">
+                <span class="login-text4">Для регистрации свяжитесь с поддержкой по адресу</span>
+                <span>help@dormitory.bmstu.ru</span>
+            </div>
+
+            {% if form.errors %}
+                <p class="error-message">Ошибка: проверьте введенные данные</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

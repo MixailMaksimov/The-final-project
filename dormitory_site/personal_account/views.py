@@ -16,7 +16,7 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 form = LoginForm()  # Очистить форму
-                return redirect('profile')  # Перенаправление на личный кабинет после успешного входа
+                return redirect('requests:index')  # Перенаправление на личный кабинет после успешного входа
     else:
         form = LoginForm()
     return render(request, 'personal_account/login.html', {'form': form})

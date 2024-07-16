@@ -1,105 +1,136 @@
 .home-screen-container {
   width: 100%;
-  height: 100vh; /* Высота равная высоте экрана */
   display: flex;
-  justify-content: center;
+  overflow: auto;
+  min-height: 100vh;
   align-items: center;
+  flex-direction: column;
 }
-
 .home-screen-frame {
   width: 100%;
-  height: 100vh; /* Высота равная высоте экрана */
-  position: relative;
+  height: 1024px;
+  display: flex;
   overflow: hidden;
-}
-
-.home-screen-background {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Масштабирует изображение так, чтобы оно полностью заполняло контейнер */
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
-.home-screen-container1 {
-  width: 100%;
-  max-width: 1200px; /* Чтобы контент не растягивался на больших экранах */
-  height: auto;
   position: relative;
-  top: 100px; /* Используем относительные значения для адаптивности */
-  right: 5%;
-  display: flex;
+  background: linear-gradient(180deg, rgba(139, 227, 255, 0.800000011920929) 0%, rgba(135, 219, 184, 0.800000011920929) 69%, rgba(130, 210, 110, 0.800000011920929) 100%);
+  align-items: center;
+  flex-shrink: 0;
   justify-content: center;
-  z-index: 1;
 }
-
-.home-screen-logo {
-  width: 100%;
-  max-width: 717px;
-  height: 170px;
-  position: relative;
+.home-screen-background {
+  flex: 1;
+  left: 0px;
+  right: 0px;
+  width: auto;
+  bottom: 0px;
+  height: auto;
+  margin: auto;
+  opacity: 0.90;
+  z-index: 0;
+  position: absolute;
+  padding-top: 0px;
+  margin-right: auto;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+.home-screen-container1 {
+  top: var(--dl-space-space-threeunits);
+  right: var(--dl-space-space-fiveunits);
+  width: 717px;
+  height: 341px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  position: absolute;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
 }
-
-.home-screen-dormitory,
-.home-screen-subtitle {
-  color: #fff;
+.home-screen-logo {
+  top: 0px;
+  left: 0px;
+  width: 717px;
+  height: 170px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.home-screen-dormitory {
+  color: rgba(255, 255, 255, 1);
+  height: auto;
+  position: absolute;
+  font-size: 128px;
+  font-style: Regular;
+  text-align: left;
   font-family: ABeeZee;
   font-weight: 400;
   line-height: normal;
-  text-align: left;
-  font-size: 2em; /* Используем em для лучшей масштабируемости */
-  margin-bottom: 10px;
+  font-stretch: normal;
+  text-decoration: none;
 }
-
 .home-screen-subtitle {
-  font-size: 1em;
-  text-align: center;
-  margin-top: 10px;
-}
-
-.home-screen-cabinet-button {
-  width: 524px;
-  height: 100px;
+  top: 132px;
+  left: 0px;
+  color: rgba(255, 255, 255, 1);
+  right: 0px;
+  height: auto;
+  margin: auto;
   position: absolute;
-  bottom: 20px; /* Используем относительные значения для адаптивности */
-  left: 50%;
-  transform: translateX(-50%);
+  font-size: 32px;
+  font-style: Regular;
+  text-align: center;
+  font-family: ABeeZee;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.home-screen-cabinet-button {
+  left: 102px;
+  width: 524px;
+  bottom: 0px;
+  height: 100px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-width: 0px;
   background-color: transparent;
 }
-
 .home-screen-rectangle1 {
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
+  top: 0px;
+  left: 0px;
+  width: 524px;
+  height: 100px;
+  opacity: 0.80;
+  position: absolute;
   border-radius: 20px;
 }
-
 .home-screen-text2 {
-  color: #5a7f78;
+  top: 31px;
+  left: 118px;
+  color: rgba(90, 127, 120, 1);
+  height: auto;
+  position: absolute;
+  font-size: 32px;
+  font-style: Regular;
+  text-align: left;
   font-family: ABeeZee;
   font-weight: 400;
   line-height: normal;
-  font-size: 1em;
-  text-align: center;
-  position: relative;
+  font-stretch: normal;
+  text-decoration: none;
 }
-
-@media (max-width: 1600px) {
+@media(max-width: 1600px) {
   .home-screen-dormitory {
-    text-align: center;
+    left: 0px;
+    right: 0px;
     margin: auto;
   }
-
   .home-screen-subtitle {
-    text-align: center;
+    left: 0px;
+    right: 0px;
     margin: auto;
+    text-align: center;
   }
 }

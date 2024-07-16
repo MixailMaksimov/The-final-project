@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="english">
   <head>
-    <title>Requests - exported project</title>
+    <title>booking_coworking_list</title>
     <meta property="og:title" content="Requests - exported project" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
@@ -188,8 +188,8 @@
         text-decoration: none;
       }
       .requests-new-request {
-        left: 434px;
-        width: 400px;
+        left: 20%;
+        width: 800px;
         bottom: 0px;
         height: 80px;
         display: flex;
@@ -198,8 +198,26 @@
         flex-shrink: 0;
       }
       .requests-rectangle12 {
-        top: 0px;
-        left: 100px;
+        top: -70px;
+        left: -200px;
+        width: 400px;
+        height: 80px;
+        opacity: 0.80;
+        position: absolute;
+        border-radius: 20px;
+      }
+      .requests-rectangle120 {
+        top: -70px;
+        left: 250px;
+        width: 400px;
+        height: 80px;
+        opacity: 0.80;
+        position: absolute;
+        border-radius: 20px;
+      }
+      .requests-rectangle1200 {
+        top: -70px;
+        left: 700px;
         width: 400px;
         height: 80px;
         opacity: 0.80;
@@ -210,6 +228,66 @@
         top: 20px;
         left: 183.07633209228516px;
         color: rgba(112, 162, 148, 1);
+        height: auto;
+        position: absolute;
+        font-size: 32px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text0300 {
+        top: -120px;
+        left: 183.07633209228516px;
+        color: rgb(67, 98, 93);
+        height: auto;
+        position: absolute;
+        font-size: 32px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text03a {
+        top: -200px;
+        left: 10px;
+        color: rgb(67, 98, 93);
+        height: auto;
+        position: absolute;
+        font-size: 32px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text03b {
+        top: -200px;
+        left: 10px;
+        color: rgb(67, 98, 93);
+        height: auto;
+        position: absolute;
+        font-size: 32px;
+        font-style: Regular;
+        text-align: center;
+        font-family: ABeeZee;
+        font-weight: 400;
+        line-height: normal;
+        font-stretch: normal;
+        text-decoration: none;
+      }
+      .requests-text03c {
+        top: -200px;
+        left: 10px;
+        color: rgb(67, 98, 93);
         height: auto;
         position: absolute;
         font-size: 32px;
@@ -689,6 +767,42 @@
           line-height: normal;
           text-decoration: none;
         }
+        .requests-text03a {
+          top:-50px;
+          left: -800px;
+          color: rgb(67, 98, 93);
+          right: 0px;
+          margin: auto;
+          font-size: 28px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
+        .requests-text03b {
+          top:-50px;
+          left: 90px;
+          color: rgb(67, 98, 93);
+          right: 0px;
+          margin: auto;
+          font-size: 28px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
+        .requests-text03c {
+          top:-50px;
+          left: 850px;
+          color: rgb(67, 98, 93);
+          right: 0px;
+          margin: auto;
+          font-size: 28px;
+          font-family: ABeeZee;
+          font-weight: 400;
+          line-height: normal;
+          text-decoration: none;
+        }
         .requests-list-of-requests {
           width: 642px;
         }
@@ -828,16 +942,37 @@
                 </ul>
               </div>
             </div>
-            <span class="requests-text03">Забронировать место в коворкинге</span>
+            
             <div class="requests-new-request button">
-              <img
+            <span class="requests-text0300">Забронировать место в коворкинге</span>
+            <img
                 alt="Rectangle1I538"                
                 src="{% static 'requests/images/rectangle1i538-7fb-200h.png' %}"
                 class="requests-rectangle12"
-              />
-              <div class="requests-container">
+            />
+            <div class="requests-container">
                 <div class="new-request-send-request button">
-                    <a href="{% url 'requests:select_free_desk' 'With_Computer' %}" class="custom-button">с компьютером</a>
+                    <span style="color: rgb(67, 98, 93);"><a href="{% url 'requests:select_free_desk' 'With_Computer' %}" class="requests-text03a">C компьютером</a></span>
+                </div>
+            </div>
+            <img
+                alt="Rectangle1I538"                
+                src="{% static 'requests/images/rectangle1i538-7fb-200h.png' %}"
+                class="requests-rectangle120"
+            />
+            <div class="requests-container">
+                <div class="new-request-send-request button">
+                    <span style="color: rgb(67, 98, 93);"><a href="{% url 'requests:select_free_desk' 'Without_Computer' %}" class="requests-text03b">Без компьютера</a></span>
+                </div>
+            </div>
+            <img
+                alt="Rectangle1I538"                
+                src="{% static 'requests/images/rectangle1i538-7fb-200h.png' %}"
+                class="requests-rectangle1200"
+            />
+            <div class="requests-container">
+                <div class="new-request-send-request button">
+                    <span style="color: rgb(67, 98, 93);"><a href="{% url 'requests:select_free_desk' 'Any' %}" class="requests-text03c">Любое</a></span>
                 </div>
             </div>
           </div>

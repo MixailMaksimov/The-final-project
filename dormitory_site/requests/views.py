@@ -91,6 +91,7 @@ class BookingCoworkingUpdateView(UpdateView):
     success_url = reverse_lazy('requests:booking_coworking_list')
 
 
+
 @login_required
 def select_free_desk(request, preference):
     if request.method == 'POST':
